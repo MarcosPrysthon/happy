@@ -14,6 +14,11 @@ export default {
             opening_hours,
             open_on_weekends
          } = req.body;
+
+        const reqImages = req.files as Express.Multer.File[];
+        const images = reqImages.map(image => {
+            return { path: image.filename }
+        })
     
         const orphanagesRepo = getRepository(Orphanage); 
     
@@ -24,7 +29,8 @@ export default {
             about,
             instructions,
             opening_hours,
-            open_on_weekends
+            open_on_weekends,
+            images
         });
     
         await orphanagesRepo.save(orphanage);
